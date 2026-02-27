@@ -5,6 +5,7 @@ import OnboardingModal from "../components/OnboardingModal";
 import confetti from "canvas-confetti";
 import { Users, Target, Zap, Clock, Rocket, ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import Avatar from "../components/Avatar";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -76,7 +77,12 @@ export default function Dashboard() {
             setCurrentUser(user);
 
             if (user) {
-                const userTeams = allTeams.filter(t => t.members?.includes(user.uid));
+                const userTeams = allTeams
+                    .filter(t => t.members?.includes(user.uid))
+                    .map(t => ({
+                        ...t,
+                        memberObjects: (t.members || []).map(uid => users.find(u => u.uid === uid)).filter(Boolean)
+                    }));
                 setMyTeams(userTeams);
             }
 
@@ -253,10 +259,20 @@ export default function Dashboard() {
                                     </div>
                                     <h3 className="mt-4 font-black text-heading">{team.name}</h3>
                                     <p className="text-slate-400 text-sm mt-1 line-clamp-1">{team.description}</p>
-                                    <div className="mt-4 flex -space-x-2">
-                                        {(team.members || []).slice(0, 4).map((m, i) => (
-                                            <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-slate-100" />
+                                    <div className="mt-4 flex">
+                                        {(team.memberObjects || []).slice(0, 4).map((m, i) => (
+                                            <Avatar
+                                                key={i}
+                                                user={m}
+                                                config={m.avatarConfig}
+                                                className="w-8 h-8 text-[10px] -ml-2 first:ml-0 ring-2 ring-white"
+                                            />
                                         ))}
+                                        {(team.members?.length > 4) && (
+                                            <div className="w-8 h-8 rounded-full bg-slate-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-slate-400 -ml-2">
+                                                +{team.members.length - 4}
+                                            </div>
+                                        )}
                                     </div>
                                 </Link>
                             )) : (

@@ -7,13 +7,18 @@ export const createTeam = async (name, description, tags, members = []) => {
     const currentUser = getCurrentUser();
     if (!currentUser) throw new Error("Not logged in");
 
-    const teamId = uuidv4();
+    let teamId;
+    try {
+        teamId = uuidv4();
+    } catch (e) {
+        teamId = Math.random().toString(36).substr(2, 9) + Date.now();
+    }
     const teamRef = doc(db, "teams", teamId);
 
-    // Add creator to members automatically and filter valid UIDs
+    // Add creator to members automatically and handle both strings or objects
     const memberUids = (members || [])
-        .filter(m => m && m.uid)
-        .map(m => m.uid);
+        .map(m => typeof m === 'string' ? m : m?.uid)
+        .filter(Boolean);
     const allMembers = Array.from(new Set([currentUser.uid, ...memberUids]));
 
     await setDoc(teamRef, {

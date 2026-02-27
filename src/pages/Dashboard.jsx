@@ -240,7 +240,7 @@ export default function Dashboard() {
                     <div className="space-y-6">
                         <div className="flex items-center justify-between">
                             <h2 className="text-xl font-bold text-heading">Your Active Labs</h2>
-                            <Link to="/teams" className="text-sm font-bold text-primary hover:underline">Launch Sandbox</Link>
+                            <Link to="/team-builder" className="text-sm font-bold text-primary hover:underline">Launch Sandbox</Link>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {myTeams.length > 0 ? myTeams.map(team => (
@@ -262,7 +262,7 @@ export default function Dashboard() {
                             )) : (
                                 <div className="col-span-2 saas-card p-10 text-center border-dashed bg-slate-50 shadow-none">
                                     <p className="text-slate-500 font-bold mb-4">No active labs found.</p>
-                                    <Link to="/teams" className="btn-primary px-8 py-3 inline-block">Start Your First Project</Link>
+                                    <Link to="/team-builder" className="btn-primary px-8 py-3 inline-block">Start Your First Project</Link>
                                 </div>
                             )}
                         </div>

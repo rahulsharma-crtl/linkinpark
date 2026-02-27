@@ -117,13 +117,18 @@ export default function MatchCard({ match }) {
                     >
                         {hasConnected ? <><CheckCircle2 size={18} /> Sent</> : <><UserPlus size={18} /> Connect</>}
                     </button>
-                    <Link
-                        to={`/room/new?partner=${match.user?.uid}`}
-                        className="w-12 h-12 flex items-center justify-center bg-slate-50 border border-border text-slate-400 hover:text-primary hover:border-primary/20 rounded-2xl transition-all"
+                    <button
+                        onClick={confirmConnection}
+                        disabled={isConnecting}
+                        className="w-12 h-12 flex items-center justify-center bg-slate-50 border border-border text-slate-400 hover:text-primary hover:border-primary/20 rounded-2xl transition-all disabled:opacity-50"
                         title="Quick Chat"
                     >
-                        <ArrowRight size={20} />
-                    </Link>
+                        {isConnecting ? (
+                            <div className="w-5 h-5 border-2 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                        ) : (
+                            <ArrowRight size={20} />
+                        )}
+                    </button>
                 </div>
             </motion.div>
 

@@ -133,7 +133,8 @@ export default function TeamBuilder() {
             const roomId = await createTeam(
                 "New Vision",
                 projectIdea,
-                skillsNeeded
+                skillsNeeded,
+                selectedTeammates
             );
             toast.success("Project Room Live!");
             navigate(`/room/${roomId}`);

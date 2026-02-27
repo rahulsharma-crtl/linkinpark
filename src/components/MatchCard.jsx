@@ -58,7 +58,7 @@ export default function MatchCard({ match }) {
                 <div className="flex flex-col items-center text-center mb-6">
                     <Avatar user={match.user} config={match.user?.avatarConfig} className="w-20 h-20 text-3xl mb-4 ring-4 ring-slate-50 shadow-soft" />
                     <h3 className="text-xl font-bold text-heading leading-tight">
-                        {match.user?.displayName || "Peer"}
+                        {match.user?.displayName || match.user?.email?.split('@')[0] || "Student"}
                     </h3>
                     <p className="text-sm font-bold text-primary mt-1 uppercase tracking-widest">{match.user?.department || "Campus Hub"}</p>
                 </div>
@@ -127,7 +127,7 @@ export default function MatchCard({ match }) {
                                     <X size={24} />
                                 </button>
                             </div>
-                            <h3 className="text-2xl font-bold text-heading mb-3">Connect with {match.user?.displayName ? match.user.displayName.split(' ')[0] : "Peer"}?</h3>
+                            <h3 className="text-2xl font-bold text-heading mb-3">Connect with {match.user?.displayName ? match.user.displayName.split(' ')[0] : (match.user?.email?.split('@')[0] || "Student")}?</h3>
                             <p className="text-slate-500 font-medium leading-relaxed mb-8">
                                 We'll notify them and once accepted, you can start collaborating in a Project Room.
                             </p>

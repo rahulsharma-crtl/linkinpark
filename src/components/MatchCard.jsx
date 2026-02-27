@@ -4,19 +4,44 @@ import { Star, ArrowRight, UserPlus, ExternalLink, X, CheckCircle2, MoreHorizont
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { createTeam } from "../services/teamService";
+import { useNavigate } from "react-router-dom";
 
 export default function MatchCard({ match }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [hasConnected, setHasConnected] = useState(false);
+    const [isConnecting, setIsConnecting] = useState(false);
+    const navigate = useNavigate();
 
     const handleConnectClick = () => {
         setIsModalOpen(true);
     };
 
-    const confirmConnection = () => {
-        setIsModalOpen(false);
-        setHasConnected(true);
-        toast.success(`Connection request sent to ${match.user?.displayName?.split(' ')[0]}`);
+    const confirmConnection = async () => {
+        setIsConnecting(true);
+        try {
+            // Create a 1-on-1 team with the specific peer
+            const roomId = await createTeam(
+                `Collaboration with ${match.user?.displayName?.split(' ')[0] || "Student"}`,
+                "Private 1-on-1 collaboration space",
+                [],
+                [match.user]
+            );
+
+            setIsModalOpen(false);
+            setHasConnected(true);
+            toast.success(`Connection established with ${match.user?.displayName?.split(' ')[0] || "Student"}!`);
+
+            // Navigate to the new project room
+            setTimeout(() => {
+                navigate(`/room/${roomId}`);
+            }, 500);
+        } catch (error) {
+            console.error("Failed to establish connection:", error);
+            toast.error("Failed to connect. Please try again.");
+        } finally {
+            setIsConnecting(false);
+        }
     };
 
     const getScoreColor = (score) => {
@@ -141,9 +166,14 @@ export default function MatchCard({ match }) {
                                 </button>
                                 <button
                                     onClick={confirmConnection}
-                                    className="flex-1 h-14 btn-primary"
+                                    disabled={isConnecting}
+                                    className="flex-1 h-14 btn-primary relative flex items-center justify-center disabled:opacity-70"
                                 >
-                                    Send Request
+                                    {isConnecting ? (
+                                        <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                                    ) : (
+                                        "Connect Now"
+                                    )}
                                 </button>
                             </div>
                         </motion.div>

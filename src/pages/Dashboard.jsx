@@ -3,7 +3,7 @@ import { getAllUsers } from "../services/userService";
 import { getCurrentUser } from "../services/authService";
 import OnboardingModal from "../components/OnboardingModal";
 import confetti from "canvas-confetti";
-import { Users, Code, Activity, Network, Target, Zap, Clock, Rocket, ArrowRight, Sparkles } from "lucide-react";
+import { Users, Target, Zap, Clock, Rocket, ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
     Chart as ChartJS,
@@ -38,6 +38,7 @@ export default function Dashboard() {
     const [chartData, setChartData] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
     const [myTeams, setMyTeams] = useState([]);
+    const [recentActivity, setRecentActivity] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const containerVariants = {
@@ -91,6 +92,36 @@ export default function Dashboard() {
                     }
                 ]
             });
+
+            // Generate Activity Feed
+            const activities = [];
+
+            // Add latest users
+            users.slice(0, 5).forEach(u => {
+                activities.push({
+                    id: `user-${u.uid}`,
+                    user: u.displayName?.split(' ')[0] || "User",
+                    action: "joined the",
+                    target: "Network",
+                    time: "Recently",
+                    timestamp: u.createdAt || new Date().toISOString()
+                });
+            });
+
+            // Add latest teams
+            allTeams.slice(0, 5).forEach(t => {
+                activities.push({
+                    id: `team-${t.id}`,
+                    user: "New Room",
+                    action: "created:",
+                    target: t.name,
+                    time: "Recently",
+                    timestamp: t.createdAt || new Date().toISOString()
+                });
+            });
+
+            // Sort by timestamp if available
+            setRecentActivity(activities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 8));
 
             setStats({
                 totalUsers: users.length,
@@ -246,11 +277,19 @@ export default function Dashboard() {
                             <h3 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">Node Activity</h3>
                         </div>
                         <div className="flex-1 p-8 space-y-8 overflow-y-auto max-h-[600px] custom-scrollbar">
-                            <ActivityCard user="Emily W." action="shared a vision" target="Quantum AI" time="4m" />
-                            <ActivityCard user="Marcus T." action="joined room" target="FinTech Lab" time="12m" />
-                            <ActivityCard user="Sofia L." action="looking for" target="Rust Dev" time="1h" />
-                            <ActivityCard user="David K." action="deployed" target="Smart Campus" time="3h" />
-                            <ActivityCard user="Alex R." action="updated profile" target="Tech Stack" time="5h" />
+                            {recentActivity.length > 0 ? recentActivity.map(act => (
+                                <ActivityCard
+                                    key={act.id}
+                                    user={act.user}
+                                    action={act.action}
+                                    target={act.target}
+                                    time={act.time}
+                                />
+                            )) : (
+                                <div className="text-center py-10">
+                                    <p className="text-slate-400 font-bold text-sm">No recent activity</p>
+                                </div>
+                            )}
                         </div>
                         <Link to="/graph" className="p-6 text-center text-sm font-black text-primary border-t border-border hover:bg-slate-50 transition-all">
                             EXPLORE NETWORK GRAPH

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
-import { Star, ArrowRight, UserPlus, ExternalLink, X, CheckCircle2, MoreHorizontal } from "lucide-react";
+import { ArrowRight, UserPlus, X, CheckCircle2, MoreHorizontal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import toast from "react-hot-toast";

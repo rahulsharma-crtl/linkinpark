@@ -6,7 +6,7 @@ import { createTeam } from "../services/teamService";
 import { useNavigate } from "react-router-dom";
 import { Plus, Users, ArrowRight, Wand2, Lightbulb, UserPlus, X, Rocket, Sparkles, Target, BrainCircuit } from "lucide-react";
 import MatchCard from "../components/MatchCard";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 
 export default function TeamBuilder() {
@@ -284,8 +284,8 @@ export default function TeamBuilder() {
                                             <button
                                                 onClick={() => toggleTeammate(match.user)}
                                                 className={`absolute bottom-6 right-6 w-12 h-12 rounded-2xl flex items-center justify-center shadow-premium transition-all active:scale-95 ${selectedTeammates.some(t => t.uid === match.user.uid)
-                                                        ? 'bg-red-500 text-white'
-                                                        : 'bg-primary text-white hover:bg-primary-hover'
+                                                    ? 'bg-red-500 text-white'
+                                                    : 'bg-primary text-white hover:bg-primary-hover'
                                                     }`}
                                             >
                                                 {selectedTeammates.some(t => t.uid === match.user.uid) ? <X size={20} /> : <Plus size={20} />}

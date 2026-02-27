@@ -24,7 +24,8 @@ export const createUserIfNotExists = async (user) => {
             interests: [],
             projects: [],
             badges: ["Pioneer"],
-            avatarConfig: { colorId: "blue", emoji: "" }
+            avatarConfig: { colorId: "blue", emoji: "" },
+            createdAt: new Date().toISOString()
         });
     } else {
         // Ensure name and photo are synced if they were missing

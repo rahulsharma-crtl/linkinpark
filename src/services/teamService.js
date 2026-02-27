@@ -10,8 +10,11 @@ export const createTeam = async (name, description, tags, members = []) => {
     const teamId = uuidv4();
     const teamRef = doc(db, "teams", teamId);
 
-    // Add creator to members automatically
-    const allMembers = Array.from(new Set([currentUser.uid, ...members.map(m => m.uid)]));
+    // Add creator to members automatically and filter valid UIDs
+    const memberUids = (members || [])
+        .filter(m => m && m.uid)
+        .map(m => m.uid);
+    const allMembers = Array.from(new Set([currentUser.uid, ...memberUids]));
 
     await setDoc(teamRef, {
         id: teamId,

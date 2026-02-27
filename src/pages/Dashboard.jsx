@@ -320,7 +320,7 @@ function ActivityCard({ user, action, target, time }) {
     return (
         <div className="flex gap-4 group cursor-pointer">
             <div className="w-10 h-10 rounded-xl bg-slate-50 border border-border flex items-center justify-center text-xs font-black text-slate-400 group-hover:bg-primary/5 group-hover:border-primary/20 transition-all shrink-0">
-                {user.charAt(0)}
+                {user?.charAt(0) || "U"}
             </div>
             <div className="flex-1 min-w-0">
                 <p className="text-sm font-bold text-heading leading-relaxed">

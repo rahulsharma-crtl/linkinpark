@@ -119,7 +119,7 @@ export default function TeamBuilder() {
                 return;
             }
             setSelectedTeammates([...selectedTeammates, user]);
-            toast.success(`Joined: ${user?.displayName?.split(' ')[0]}`);
+            toast.success(`Joined: ${user?.displayName ? user.displayName.split(' ')[0] : "Peer"}`);
         }
     };
 

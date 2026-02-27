@@ -197,7 +197,7 @@ export default function ProjectRoom() {
                                                 </div>
                                             </div>
                                             <span className="text-[9px] font-black text-slate-300 mt-1.5 px-1 uppercase tracking-tighter">
-                                                {isMe ? 'Sent' : (msg.senderName || 'Peer').split(' ')[0]}
+                                                {isMe ? 'Sent' : (msg.senderName || 'Peer')?.split(' ')[0]}
                                             </span>
                                         </div>
                                     );

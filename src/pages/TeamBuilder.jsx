@@ -6,6 +6,7 @@ import { createTeam } from "../services/teamService";
 import { useNavigate } from "react-router-dom";
 import { Plus, Users, ArrowRight, Wand2, Lightbulb, UserPlus, X, Rocket, Sparkles, Target, BrainCircuit } from "lucide-react";
 import MatchCard from "../components/MatchCard";
+import Avatar from "../components/Avatar";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 
@@ -203,11 +204,15 @@ export default function TeamBuilder() {
                         <div className="flex flex-wrap items-center justify-center gap-10 py-10">
                             {/* Me */}
                             <div className="flex flex-col items-center">
-                                <div className="w-24 h-24 bg-white rounded-[32px] flex items-center justify-center text-3xl font-black text-primary shadow-premium border-4 border-primary/20 relative">
-                                    {me?.displayName?.charAt(0) || 'U'}
-                                    <div className="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg border-2 border-white uppercase">Lead</div>
-                                </div>
-                                <span className="mt-4 text-sm font-bold text-heading">You</span>
+                                <Avatar
+                                    user={me}
+                                    config={me?.avatarConfig}
+                                    className="w-24 h-24 text-3xl mb-4 ring-4 ring-primary/20 shadow-premium border-4 border-white relative"
+                                />
+                                <span className="mt-2 text-sm font-bold text-heading">
+                                    {me?.displayName?.split(' ')[0] || me?.email?.split('@')[0] || "You"}
+                                </span>
+                                <div className="bg-primary text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg uppercase mt-2">Team Lead</div>
                             </div>
 
                             <div className="h-px bg-slate-200 w-12 hidden md:block" />
@@ -221,16 +226,22 @@ export default function TeamBuilder() {
                                         exit={{ opacity: 0, scale: 0.8 }}
                                         className="flex flex-col items-center group relative"
                                     >
-                                        <div className="w-24 h-24 bg-white rounded-[32px] flex items-center justify-center text-3xl font-black text-slate-300 shadow-soft border-2 border-slate-100 group-hover:border-primary/30 transition-all cursor-pointer overflow-hidden">
-                                            {teammate.displayName?.charAt(0)}
+                                        <div className="relative cursor-pointer">
+                                            <Avatar
+                                                user={teammate}
+                                                config={teammate?.avatarConfig}
+                                                className="w-24 h-24 text-3xl shadow-soft border-2 border-slate-100 group-hover:border-primary/30 transition-all overflow-hidden"
+                                            />
                                             <div
                                                 onClick={() => toggleTeammate(teammate)}
-                                                className="absolute inset-0 bg-red-500/90 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                                className="absolute inset-0 bg-red-500/90 text-white rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                                             >
                                                 <X size={32} />
                                             </div>
                                         </div>
-                                        <span className="mt-4 text-sm font-bold text-heading">{teammate.displayName?.split(' ')[0]}</span>
+                                        <span className="mt-4 text-sm font-bold text-heading">
+                                            {teammate.displayName?.split(' ')[0] || teammate.email?.split('@')[0] || "Student"}
+                                        </span>
                                     </motion.div>
                                 ))}
 

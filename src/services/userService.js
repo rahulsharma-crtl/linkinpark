@@ -49,10 +49,11 @@ export const updateUserProfile = async (uid, data) => {
     if (!uid) return;
     const userRef = doc(db, "users", uid);
     try {
-        if (data.bio && data.bio.length > 20 && data.badges && !data.badges.includes("Storyteller")) {
+        if (!data.badges) data.badges = [];
+        if (data.bio && data.bio.length > 20 && !data.badges.includes("Storyteller")) {
             data.badges.push("Storyteller");
         }
-        if (data.skills && data.skills.length >= 5 && data.badges && !data.badges.includes("Skill Master")) {
+        if (data.skills && data.skills.length >= 5 && !data.badges.includes("Skill Master")) {
             data.badges.push("Skill Master");
         }
         await setDoc(userRef, data, { merge: true });

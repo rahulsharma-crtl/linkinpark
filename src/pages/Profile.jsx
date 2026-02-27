@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { getUserById, updateUserProfile } from "../services/userService";
 import { getCurrentUser } from "../services/authService";
 import Toast from "../components/Toast";
-import Avatar, { AVATAR_COLORS, POPULAR_EMOJIS } from "../components/Avatar";
+import Avatar from "../components/Avatar";
+import { AVATAR_COLORS, POPULAR_EMOJIS } from "../utils/constants";
 import { Save, X, Plus } from "lucide-react";
 
 export default function Profile() {

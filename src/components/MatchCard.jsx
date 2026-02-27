@@ -13,7 +13,11 @@ export default function MatchCard({ match }) {
             <div className="flex items-center gap-4 mb-4">
                 <Avatar user={match.user} config={match.user.avatarConfig} className="w-16 h-16 text-xl" />
                 <div>
-                    <h3 className="text-xl font-display font-black text-slate-900">{match.user.displayName}</h3>
+                    <h3 className="text-xl font-display font-black text-slate-900">
+                        {match.user.displayName === "Peer" || !match.user.displayName
+                            ? (match.user.email?.split('@')[0] || "Student")
+                            : match.user.displayName}
+                    </h3>
                     <p className="text-sm font-bold text-slate-500">{match.user.department || "No Department"}</p>
                 </div>
             </div>

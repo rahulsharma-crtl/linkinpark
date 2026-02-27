@@ -1,5 +1,5 @@
 import { db } from "../firebase";
-import { collection, doc, setDoc, getDoc, getDocs, updateDoc, arrayUnion, query, where, addDoc } from "firebase/firestore";
+import { collection, doc, setDoc, getDoc, getDocs, updateDoc, arrayUnion, addDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { getCurrentUser } from "./authService";
 

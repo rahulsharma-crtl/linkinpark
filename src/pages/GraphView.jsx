@@ -70,9 +70,6 @@ export default function GraphView() {
 
         setSelectedNode({ ...node, matchInfo });
 
-        const distance = 40;
-        const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
-
         graphRef.current?.centerAt(node.x, node.y, 1000);
         graphRef.current?.zoom(4, 2000);
     }, [graphData]);

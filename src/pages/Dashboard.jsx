@@ -135,7 +135,7 @@ export default function Dashboard() {
             <div className="mt-12 doodle-card p-8 bg-[#f5f3ff] relative overflow-hidden">
                 <div className="absolute -right-10 -top-10 text-[120px] opacity-10 rotate-12">👋</div>
                 <h2 className="text-2xl font-display font-bold mb-4 flex items-center gap-2 relative z-10">
-                    Welcome to LinkInPark{currentUser ? `, ${currentUser.displayName.split(' ')[0]}` : ""} 🚀
+                    Welcome to LinkInPark{currentUser && currentUser.displayName ? `, ${currentUser.displayName.split(' ')[0]}` : ""} 🚀
                 </h2>
                 <p className="text-slate-600 font-medium leading-relaxed max-w-3xl text-lg relative z-10">
                     The central hub for NHCE students to connect, find project collaborators, and build powerful teams.

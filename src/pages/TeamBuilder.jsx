@@ -6,7 +6,7 @@ import { createTeam } from "../services/teamService";
 import { useNavigate } from "react-router-dom";
 import { Plus, Users, ArrowRight, Wand2, Lightbulb, UserPlus, X, Rocket, Sparkles, Target, BrainCircuit } from "lucide-react";
 import MatchCard from "../components/MatchCard";
-import { AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 
 export default function TeamBuilder() {

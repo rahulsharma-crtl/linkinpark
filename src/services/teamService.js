@@ -17,20 +17,32 @@ export const createTeam = async (name, description, tags, members = []) => {
 
     // Add creator to members automatically and handle both strings or objects
     const memberUids = (members || [])
-        .map(m => typeof m === 'string' ? m : m?.uid)
+        .map(m => {
+            const uid = typeof m === 'string' ? m : m?.uid;
+            if (!uid) console.warn("Member missing UID:", m);
+            return uid;
+        })
         .filter(Boolean);
     const allMembers = Array.from(new Set([currentUser.uid, ...memberUids]));
+    console.log("Calculated members:", allMembers);
 
-    await setDoc(teamRef, {
-        id: teamId,
-        name: name || "New Project Team",
-        description: description || "",
-        tags: tags || [],
-        members: allMembers,
-        createdBy: currentUser.uid,
-        createdAt: new Date().toISOString(),
-        status: "active"
-    });
+    console.log("Creating team:", { teamId, name, allMembers });
+    try {
+        await setDoc(teamRef, {
+            id: teamId,
+            name: name || "New Project Team",
+            description: description || "",
+            tags: tags || [],
+            members: allMembers,
+            createdBy: currentUser.uid,
+            createdAt: new Date().toISOString(),
+            status: "active"
+        });
+        console.log("Team created successfully:", teamId);
+    } catch (error) {
+        console.error("Firestore setDoc failed:", error);
+        throw error;
+    }
 
     return teamId;
 };

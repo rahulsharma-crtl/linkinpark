@@ -3,12 +3,13 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBZnve1I2J7brWB1789LI8s6D4NSg13n1A",
-  authDomain: "linkinpark-46ac8.firebaseapp.com",
-  projectId: "linkinpark-46ac8",
-  storageBucket: "linkinpark-46ac8.firebasestorage.app",
-  messagingSenderId: "249617716376",
-  appId: "1:249617716376:web:432f0948fc0d1541d4aced"
+  apiKey: "AIzaSyACupc8Q3dO_CaWzcp0YgTFlttJTD7_aA8",
+  authDomain: "connect-115d5.firebaseapp.com",
+  projectId: "connect-115d5",
+  storageBucket: "connect-115d5.firebasestorage.app",
+  messagingSenderId: "1043835872556",
+  appId: "1:1043835872556:web:615f2955a8c040260ab889",
+  measurementId: "G-D6RJ5J2M14"
 };
 
 const app = initializeApp(firebaseConfig);
